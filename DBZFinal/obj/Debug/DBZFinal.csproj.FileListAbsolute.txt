@@ -1,0 +1,38 @@
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\bin\Debug\DBZFinal.exe.config
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\bin\Debug\DBZFinal.exe
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\bin\Debug\DBZFinal.pdb
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\bin\Debug\EntityFramework.dll
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\bin\Debug\EntityFramework.xml
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\bin\Debug\EntityFramework.SqlServer.xml
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\obj\Debug\DBZFinal.csprojResolveAssemblyReference.cache
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\obj\Debug\DBZFinal.Form1.resources
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\obj\Debug\DBZFinal.Properties.Resources.resources
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\obj\Debug\DBZFinal.csproj.GenerateResource.Cache
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\obj\Debug\DBZFinal.exe
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\obj\Debug\DBZFinal.pdb
+c:\users\rhind slater\documents\visual studio 2017\Projects\DBZFinal\DBZFinal\obj\Debug\DBZFinal.Migrations.initial.resources
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.CharacterSelect.resources
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.Form1.resources
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.Migrations.initial.resources
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.Properties.Resources.resources
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.csproj.GenerateResource.Cache
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.exe
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.pdb
+G:\DBZFinal\DBZFinal\bin\Debug\DBZFinal.exe.config
+G:\DBZFinal\DBZFinal\bin\Debug\DBZFinal.exe
+G:\DBZFinal\DBZFinal\bin\Debug\DBZFinal.pdb
+G:\DBZFinal\DBZFinal\bin\Debug\EntityFramework.dll
+G:\DBZFinal\DBZFinal\bin\Debug\EntityFramework.SqlServer.dll
+G:\DBZFinal\DBZFinal\bin\Debug\EntityFramework.xml
+G:\DBZFinal\DBZFinal\bin\Debug\EntityFramework.SqlServer.xml
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.Arena.resources
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.Migrations.addingWinPercentage.resources
+G:\DBZFinal\DBZFinal\bin\Debug\Interop.WMPLib.dll
+G:\DBZFinal\DBZFinal\bin\Debug\AxInterop.WMPLib.dll
+G:\DBZFinal\DBZFinal\obj\Debug\Interop.WMPLib.dll
+G:\DBZFinal\DBZFinal\obj\Debug\AxInterop.WMPLib.dll
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.csproj.ResolveComReference.cache
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.csprojAssemblyReference.cache
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.csproj.CoreCompileInputs.cache
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.csproj.CopyComplete
