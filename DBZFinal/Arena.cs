@@ -168,28 +168,6 @@ namespace DBZFinal
         }
         private void lockin()
         {
-            if (P1Status == "Attack")
-            {
-                if (P2.PassiveActive & P2.Passives.Name == "Skip")
-                {
-                    battledata.Text += $"{P1.Name} was frozen! \r\n";
-                }
-                else
-                {
-                    AttackMethod(P1, P2, p1power, p2health, p2power, p1powerlabel, p1healthlabel, p2healthlabel, p2powerlabel, P2Status);
-                }
-            }
-            if (P2Status == "Attack")
-            {
-                if (P1.PassiveActive & P1.Passives.Name == "Skip")
-                {
-                    battledata.Text += $"{P2.Name} was frozen! \r\n";
-                }
-                else
-                {
-                    AttackMethod(P2, P1, p2power, p1health, p1power, p2powerlabel, p1healthlabel, p1healthlabel, p1powerlabel, P1Status);
-                }
-            }
             if (P1Status == "Transform")
             {
                 if (P2.PassiveActive & P2.Passives.Name == "Skip")
@@ -210,6 +188,28 @@ namespace DBZFinal
                 else
                 {
                     TransformMethod(P2, P2pb, p2power, p2powerlabel);
+                }
+            }
+            if (P1Status == "Attack")
+            {
+                if (P2.PassiveActive & P2.Passives.Name == "Skip")
+                {
+                    battledata.Text += $"{P1.Name} was frozen! \r\n";
+                }
+                else
+                {
+                    AttackMethod(P1, P2, p1power, p2health, p2power, p1powerlabel, p1healthlabel, p2healthlabel, p2powerlabel, P2Status);
+                }
+            }
+            if (P2Status == "Attack")
+            {
+                if (P1.PassiveActive & P1.Passives.Name == "Skip")
+                {
+                    battledata.Text += $"{P2.Name} was frozen! \r\n";
+                }
+                else
+                {
+                    AttackMethod(P2, P1, p2power, p1health, p1power, p2powerlabel, p1healthlabel, p1healthlabel, p1powerlabel, P1Status);
                 }
             }
             if (P1Status == "Ultimate")
@@ -937,7 +937,7 @@ namespace DBZFinal
             {
                 CurrentPlayer.PassiveActive = true;
             }
-            if (CurrentPlayer.Name == "Goku" & random >= 1 & random <= CurrentPlayer.PassiveChance)
+            if (CurrentPlayer.Name == "Goku" & random <= CurrentPlayer.PassiveChance)
             {
                 if (CurrentPlayerPowerBar.Value > 80)
                 {
@@ -947,34 +947,37 @@ namespace DBZFinal
                 CurrentPlayerPowerBar.Value += 20;
                 CurrentPlayerPowerLabel.Text = "POWER:" + CurrentPlayerPowerBar.Value.ToString();
             }
-            if (CurrentPlayer.Name == "Vegeta" & random >= 1 & random <= CurrentPlayer.PassiveChance)
+            if (CurrentPlayer.Name == "Vegeta" & random <= CurrentPlayer.PassiveChance | CurrentPlayer.Name == "Vegito" & random <= CurrentPlayer.PassiveChance)
             {
                 if (CurrentPlayerHealthBar.Value > 75)
                 {
                     CurrentPlayerHealthBar.Value = 75;
                 }
-                if (CurrentPlayerHealthBar.Value <= 40)
+                if (CurrentPlayer.Form > 3)
                 {
-                    CurrentPlayer.PassiveChance = 40;
+                    if (CurrentPlayerHealthBar.Value <= 40)
+                    {
+                        CurrentPlayer.PassiveChance = 40;
+                    }
                 }
                 battledata.Text += CurrentPlayer.Name + " gained 25 health from his passive \r\n";
                 CurrentPlayerHealthBar.Value += 25;
                 CurrentPlayerHealthLabel.Text = "HEALTH:" + CurrentPlayerHealthBar.Value.ToString();
             }
-            if (CurrentPlayer.Name == "Gohan" & CurrentPlayerHealthBar.Value < 30 & CurrentPlayer.Form == 3)
+            if (CurrentPlayer.Name == "Gohan" & CurrentPlayerHealthBar.Value < 30 & CurrentPlayer.Form >= 3)
             {
                 CurrentPlayer.AttackDamage = 45;
-                if (CurrentPlayerPowerBar.Value >= 90)
+                if (CurrentPlayerPowerBar.Value >= 85)
                 {
-                    CurrentPlayerPowerBar.Value = 90;
+                    CurrentPlayerPowerBar.Value = 85;
                 }
-                CurrentPlayerPowerBar.Value += 10;
-                CurrentPlayerPowerLabel.Text = CurrentPlayerPowerBar.Value.ToString();
+                CurrentPlayerPowerBar.Value += 15;
+                CurrentPlayerPowerLabel.Text = "Power:" + CurrentPlayerPowerBar.Value.ToString();
                 battledata.Text += "Gohan gained 10 energy from his passive and entered rage \r\n";
             }
-            if (CurrentPlayer.Name == "Jiren" & CurrentPlayerHealthBar.Value <= 35 | CurrentPlayer.Name == "Toppo" & CurrentPlayerHealthBar.Value <= 35)
+            if (CurrentPlayer.Name == "Jiren" & CurrentPlayerHealthBar.Value <= 35 & CurrentPlayer.Form >= 2 | CurrentPlayer.Name == "Toppo" & CurrentPlayerHealthBar.Value <= 35 & CurrentPlayer.Form >= 2)
             {
-                CurrentPlayer.PassiveChance += 10;
+                CurrentPlayer.PassiveChance = 75;
                 CurrentPlayer.UltDamage = 80;
             }
         }

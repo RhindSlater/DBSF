@@ -344,6 +344,7 @@
             // 
             // battledata
             // 
+            this.battledata.Enabled = false;
             this.battledata.Location = new System.Drawing.Point(510, 599);
             this.battledata.Margin = new System.Windows.Forms.Padding(2);
             this.battledata.Multiline = true;
