@@ -36,3 +36,5 @@ G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.csproj.ResolveComReference.cache
 G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.csprojAssemblyReference.cache
 G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.csproj.CoreCompileInputs.cache
 G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.csproj.CopyComplete
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.Migrations.PassivesClass.resources
+G:\DBZFinal\DBZFinal\obj\Debug\DBZFinal.Migrations.test.resources

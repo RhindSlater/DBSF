@@ -280,8 +280,6 @@
             // 
             this.p1rb1.AutoSize = true;
             this.p1rb1.BackColor = System.Drawing.Color.Transparent;
-            this.p1rb1.Checked = true;
-            this.p1rb1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.p1rb1.Enabled = false;
             this.p1rb1.Location = new System.Drawing.Point(494, 55);
             this.p1rb1.Name = "p1rb1";
@@ -293,8 +291,6 @@
             // 
             this.p1rb2.AutoSize = true;
             this.p1rb2.BackColor = System.Drawing.Color.Transparent;
-            this.p1rb2.Checked = true;
-            this.p1rb2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.p1rb2.Enabled = false;
             this.p1rb2.Location = new System.Drawing.Point(515, 55);
             this.p1rb2.Name = "p1rb2";
@@ -348,7 +344,6 @@
             // 
             // battledata
             // 
-            this.battledata.Enabled = false;
             this.battledata.Location = new System.Drawing.Point(510, 599);
             this.battledata.Margin = new System.Windows.Forms.Padding(2);
             this.battledata.Multiline = true;

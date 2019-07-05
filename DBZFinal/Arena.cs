@@ -65,10 +65,12 @@ namespace DBZFinal
                 time = 15;
                 reset.Stop();
                 reset.Start();
+                PassiveMethod(P1, p1power, p1health, p1powerlabel, p1healthlabel);
             }
             else
             {
                 P2Status = bt.Text;
+                PassiveMethod(P2, p2power, p2health, p2powerlabel, p2healthlabel);
                 lockin();
             }
         }
@@ -90,7 +92,7 @@ namespace DBZFinal
                 P1Port.BackgroundImage = Image.FromFile(P1.Portrait);
                 P2Port.BackgroundImage = Image.FromFile(P2.Portrait);
             }
-            roundcounter = 1;           
+            roundcounter = 1;
             P1pb.Image = Image.FromFile(P1.PortraitLeft);
             P2pb.Image = Image.FromFile(P2.PortraitRight);
             CurrentCharacterStats(P1, p1stats);
@@ -143,8 +145,8 @@ namespace DBZFinal
         }
         private void CurrentCharacterStats(Character CurrentPlayer, TextBox lb) //display stats
         {
-            lb.Text = "Name: " + CurrentPlayer.Name + "\r\nDamage: " + CurrentPlayer.AttackDamage + "\r\nAttack cost: " + CurrentPlayer.PowerCost 
-                + "\r\nPassive chance: " + CurrentPlayer.PassiveChance + "\r\nTransform cost: " + CurrentPlayer.UpgradeCost + "\r\nUlt: " + 
+            lb.Text = "Name: " + CurrentPlayer.Name + "\r\nDamage: " + CurrentPlayer.AttackDamage + "\r\nAttack cost: " + CurrentPlayer.PowerCost
+                + "\r\nPassive chance: " + CurrentPlayer.PassiveChance + "\r\nTransform cost: " + CurrentPlayer.UpgradeCost + "\r\nUlt: " +
                 CurrentPlayer.UltDamage + "\r\nUlt cost: " + CurrentPlayer.UltCost;
         }
         private void reset_Tick(object sender, EventArgs e)
@@ -166,43 +168,101 @@ namespace DBZFinal
         }
         private void lockin()
         {
-            if(P1Status == "Attack")
+            if (P1Status == "Attack")
             {
-                AttackMethod(P1, P2, p1power, p2health, p2power, p1powerlabel, p2healthlabel, p2powerlabel, P2Status);
+                if (P2.PassiveActive & P2.Passives.Name == "Skip")
+                {
+                    battledata.Text += $"{P1.Name} was frozen! \r\n";
+                }
+                else
+                {
+                    AttackMethod(P1, P2, p1power, p2health, p2power, p1powerlabel, p1healthlabel, p2healthlabel, p2powerlabel, P2Status);
+                }
             }
             if (P2Status == "Attack")
             {
-                AttackMethod(P2, P1, p2power, p1health, p1power, p2powerlabel, p1healthlabel, p1powerlabel, P1Status);
-            }
-            if (P1Status == "Powerup")
-            {
-                PowerupMethod(P1, p1power, p1powerlabel);
-            }
-            if (P2Status == "Powerup")
-            {
-                PowerupMethod(P2, p2power, p2powerlabel);
+                if (P1.PassiveActive & P1.Passives.Name == "Skip")
+                {
+                    battledata.Text += $"{P2.Name} was frozen! \r\n";
+                }
+                else
+                {
+                    AttackMethod(P2, P1, p2power, p1health, p1power, p2powerlabel, p1healthlabel, p1healthlabel, p1powerlabel, P1Status);
+                }
             }
             if (P1Status == "Transform")
             {
-                TransformMethod(P1, P1pb, p1power, p1powerlabel);
+                if (P2.PassiveActive & P2.Passives.Name == "Skip")
+                {
+                    battledata.Text += $"{P1.Name} was frozen! \r\n";
+                }
+                else
+                {
+                    TransformMethod(P1, P1pb, p1power, p1powerlabel);
+                }
             }
             if (P2Status == "Transform")
             {
-                TransformMethod(P2, P2pb, p2power, p2powerlabel);
+                if (P1.PassiveActive & P1.Passives.Name == "Skip")
+                {
+                    battledata.Text += $"{P2.Name} was frozen! \r\n";
+                }
+                else
+                {
+                    TransformMethod(P2, P2pb, p2power, p2powerlabel);
+                }
             }
-            if(P1Status == "Ultimate")
+            if (P1Status == "Ultimate")
             {
-                UltimateMethod(P1, P2, p1power, p2health, p2power, p1powerlabel, p2healthlabel, p2powerlabel, P2Status, P1pb);
+                if (P2.PassiveActive & P2.Passives.Name == "Skip")
+                {
+                    battledata.Text += $"{P1.Name} was frozen! \r\n";
+                }
+                else
+                {
+                    UltimateMethod(P1, P2, p1power, p2health, p2power, p1powerlabel, p2healthlabel, p2powerlabel, P2Status, P1pb);
+                }
             }
             if (P2Status == "Ultimate")
             {
-                UltimateMethod(P2, P1, p2power, p1health, p1power, p2powerlabel, p1healthlabel, p1powerlabel, P1Status, P2pb);
+                if (P1.PassiveActive & P1.Passives.Name == "Skip")
+                {
+                    battledata.Text += $"{P2.Name} was frozen! \r\n";
+                }
+                else
+                {
+                    UltimateMethod(P2, P1, p2power, p1health, p1power, p2powerlabel, p1healthlabel, p1powerlabel, P1Status, P2pb);
+                }
+            }
+            if (P1Status == "Powerup")
+            {
+                if (P2.PassiveActive & P2.Passives.Name == "Skip")
+                {
+                    battledata.Text += $"{P1.Name} was frozen! \r\n";
+                }
+                else
+                {
+                    PowerupMethod(P1, p1power, p1powerlabel, p2power, p2powerlabel);
+                }
+            }
+            if (P2Status == "Powerup")
+            {
+                if (P1.PassiveActive & P1.Passives.Name == "Skip")
+                {
+                    battledata.Text += $"{P2.Name} was frozen! \r\n";
+                }
+                else
+                {
+                    PowerupMethod(P2, p2power, p2powerlabel, p1power, p1powerlabel);
+                }
             }
             turn.Text = "P1's Turn";
             time = 15;
             reset.Stop();
             reset.Start();
             roundcounter += 1;
+            P1.PassiveActive = false;
+            P2.PassiveActive = false;
             roundcount.Text = "Round " + roundcounter.ToString();
             grayout(P1, p1power, button1, button3, button4, button5, P1Status);
             CurrentCharacterStats(P1, p1stats);
@@ -356,7 +416,7 @@ namespace DBZFinal
                 {
                     p2rb2.Checked = true;
                 }
-                restart(P5,P6);
+                restart(P5, P6);
             }
         }
         public void restart(Character winner, Character loser)
@@ -367,32 +427,32 @@ namespace DBZFinal
                 {
                     if (P2.Name == P20.Name)
                     {
-                        P2 = _context.Characters.Where(x => x.Name == P40.Name).FirstOrDefault();
+                        P2 = _context.Characters.Include("Passives").Where(x => x.Name == P40.Name).FirstOrDefault();
                         P20Port.Image = Image.FromFile("G:\\DBZ\\UI\\test3.png");
                     }
                     else if (P2.Name == P40.Name)
                     {
-                        P2 = _context.Characters.Where(x => x.Name == P40.Name).FirstOrDefault();
+                        P2 = _context.Characters.Include("Passives").Where(x => x.Name == P40.Name).FirstOrDefault();
                         P40Port.Image = Image.FromFile("G:\\DBZ\\UI\\test3.png");
                     }
                     else
                     {
-                        P2 = _context.Characters.Where(x => x.Name == P20.Name).FirstOrDefault();
+                        P2 = _context.Characters.Include("Passives").Where(x => x.Name == P20.Name).FirstOrDefault();
                         P2Port.Image = Image.FromFile("G:\\DBZ\\UI\\test3.png");
                     }
                     if (P1.Name == P10.Name)
                     {
-                        P1 = _context.Characters.Where(x => x.Name == P30.Name).FirstOrDefault();
+                        P1 = _context.Characters.Include("Passives").Where(x => x.Name == P30.Name).FirstOrDefault();
                         P10Port.Image = Image.FromFile("G:\\DBZ\\UI\\test3.png");
                     }
                     else if (P1.Name == P30.Name)
                     {
-                        P1 = _context.Characters.Where(x => x.Name == P30.Name).FirstOrDefault();
+                        P1 = _context.Characters.Include("Passives").Where(x => x.Name == P30.Name).FirstOrDefault();
                         P30Port.Image = Image.FromFile("G:\\DBZ\\UI\\test3.png");
                     }
                     else
                     {
-                        P1 = _context.Characters.Where(x => x.Name == P10.Name).FirstOrDefault();
+                        P1 = _context.Characters.Include("Passives").Where(x => x.Name == P10.Name).FirstOrDefault();
                         P1Port.Image = Image.FromFile("G:\\DBZ\\UI\\test3.png");
                     }
 
@@ -403,21 +463,21 @@ namespace DBZFinal
                 }
                 else
                 {
-                    if(loser.Name == P2.Name)
+                    if (loser.Name == P2.Name)
                     {
-                        if(loser.Name == P20.Name)
+                        if (loser.Name == P20.Name)
                         {
-                            P2 = _context.Characters.Where(x => x.Name == P40.Name).FirstOrDefault();
+                            P2 = _context.Characters.Include("Passives").Where(x => x.Name == P40.Name).FirstOrDefault();
                             P20Port.Image = Image.FromFile("G:\\DBZ\\UI\\test3.png");
                         }
                         else if (loser.Name == P40.Name)
                         {
-                            P2 = _context.Characters.Where(x => x.Name == P40.Name).FirstOrDefault();
+                            P2 = _context.Characters.Include("Passives").Where(x => x.Name == P40.Name).FirstOrDefault();
                             P40Port.Image = Image.FromFile("G:\\DBZ\\UI\\test3.png");
                         }
                         else
                         {
-                            P2 = _context.Characters.Where(x => x.Name == P20.Name).FirstOrDefault();
+                            P2 = _context.Characters.Include("Passives").Where(x => x.Name == P20.Name).FirstOrDefault();
                             P2Port.Image = Image.FromFile("G:\\DBZ\\UI\\test3.png");
                         }
                         p2health.Value = 100;
@@ -427,134 +487,278 @@ namespace DBZFinal
                     {
                         if (loser.Name == P10.Name)
                         {
-                            P1 = _context.Characters.Where(x => x.Name == P30.Name).FirstOrDefault();
+                            P1 = _context.Characters.Include("Passives").Where(x => x.Name == P30.Name).FirstOrDefault();
                             P10Port.Image = Image.FromFile("G:\\DBZ\\UI\\test3.png");
                         }
                         else if (loser.Name == P30.Name)
                         {
-                            P1 = _context.Characters.Where(x => x.Name == P30.Name).FirstOrDefault();
+                            P1 = _context.Characters.Include("Passives").Where(x => x.Name == P30.Name).FirstOrDefault();
                             P30Port.Image = Image.FromFile("G:\\DBZ\\UI\\test3.png");
                         }
                         else
                         {
-                            P1 = _context.Characters.Where(x => x.Name == P10.Name).FirstOrDefault();
+                            P1 = _context.Characters.Include("Passives").Where(x => x.Name == P10.Name).FirstOrDefault();
                             P1Port.Image = Image.FromFile("G:\\DBZ\\UI\\test3.png");
                         }
                         p1health.Value = 100;
                         p1power.Value = 70;
-                    }                  
+                    }
                 }
             }
             else
             {
-                P1 = _context.Characters.Where(x => x.Name == P1.Name).FirstOrDefault();
-                P2 = _context.Characters.Where(x => x.Name == P2.Name).FirstOrDefault();
+                P1 = _context.Characters.Include("Passives").Where(x => x.Name == P1.Name).FirstOrDefault();
+                P2 = _context.Characters.Include("Passives").Where(x => x.Name == P2.Name).FirstOrDefault();
                 p2health.Value = 100;
                 p2power.Value = 70;
                 p1health.Value = 100;
                 p1power.Value = 70;
             }
-            
+
             Arena_Load(this, null);
             battledata.SelectionStart = battledata.Text.Length;
             battledata.ScrollToCaret();
             P5 = null;
             P6 = null;
         }
-        public void AttackMethod(Character player, Character opponent, ProgressBar playerpower, ProgressBar opponenthealth, ProgressBar opponentpower, Label playerpwlb, Label ophplb, Label oppwlb, string status)
+        public void AttackMethod(Character player, Character opponent, ProgressBar playerpower, ProgressBar opponenthealth, ProgressBar opponentpower, Label playerpwlb, Label HealthLabel, Label ophplb, Label oppwlb, string status)
         {
-            if(status == "Block")
+            if (status == "Block")
             {
-                if(opponenthealth.Value < player.AttackDamage / 2)
+                if (opponent.Passives.Name == "HalfDamage" & opponent.PassiveActive == true)
                 {
-                    opponenthealth.Value = player.AttackDamage / 2;
+                    if (player.Passives.Name == "DoubleDamage" & opponent.PassiveActive == true)
+                    {
+                        if (opponenthealth.Value < player.AttackDamage / 2)
+                        {
+                            opponenthealth.Value = player.AttackDamage / 2;
+                        }
+                        opponenthealth.Value -= player.AttackDamage / 2;
+
+                        if (opponentpower.Value > 90)
+                        {
+                            opponentpower.Value = 90;
+                        }
+                        opponentpower.Value += 10;
+                        battledata.Text += $"{opponent.Name} blocked with half damage passive against {player.Name}'s double damage attack and took {player.AttackDamage / 2} damage \r\n";
+                    }
+                    else
+                    {
+                        if (opponenthealth.Value < player.AttackDamage / 4)
+                        {
+                            opponenthealth.Value = player.AttackDamage / 4;
+                        }
+                        opponenthealth.Value -= player.AttackDamage / 4;
+
+                        if (opponentpower.Value > 90)
+                        {
+                            opponentpower.Value = 90;
+                        }
+                        opponentpower.Value += 10;
+                        battledata.Text += $"{opponent.Name} blocked with half damage passive against {player.Name}'s Attack and took {player.AttackDamage / 4} damage \r\n";
+                    }
                 }
-                opponenthealth.Value -= player.AttackDamage / 2;
-                if (opponentpower.Value > 90)
+                else if (opponent.Passives.Name == "Dodge" & opponent.PassiveActive == true)
                 {
-                    opponentpower.Value = 90;
+                    battledata.Text += $"{opponent.Name} dodged {player.Name}'s Attack \r\n";
                 }
-                opponentpower.Value += 10;
-                battledata.Text += $"{opponent.Name} blocked {player.Name}'s Attack and took {player.AttackDamage /2} damage \r\n";
+                else if (opponent.Passives.Name == "Absorb" & opponent.PassiveActive == true)
+                {
+                    if (opponent.Form >= 2)
+                    {
+                        if (opponenthealth.Value > 100 - 10)
+                        {
+                            opponenthealth.Value = 100 - 10;
+                        }
+                        opponenthealth.Value = opponenthealth.Value + 10;
+                        HealthLabel.Text = opponenthealth.Value.ToString();
+                        battledata.Text += opponent.Name + " has absorbed " + player.Name + "'s attack and gained " + 10 + " health \r\n";
+                    }
+                    else
+                    {
+                        if (opponenthealth.Value > 100 - 5)
+                        {
+                            opponenthealth.Value = 100 - 5;
+                        }
+                        opponenthealth.Value = opponenthealth.Value + 5;
+                        HealthLabel.Text = opponenthealth.Value.ToString();
+                        battledata.Text += opponent.Name + " has absorbed " + player.Name + "'s attack and gained " + 5 + " health \r\n";
+                    }
+                }
+                else if (player.Passives.Name == "DoubleDamage" & player.PassiveActive == true)
+                {
+                    if (opponenthealth.Value < player.AttackDamage)
+                    {
+                        opponenthealth.Value = player.AttackDamage;
+                    }
+                    opponenthealth.Value -= player.AttackDamage;
+
+                    if (opponentpower.Value > 90)
+                    {
+                        opponentpower.Value = 90;
+                    }
+                    opponentpower.Value += 10;
+                    battledata.Text += $"{opponent.Name} blocked {player.Name}'s Attack and took {player.AttackDamage} damage \r\n";
+                }
+                else
+                {
+                    if (opponenthealth.Value < player.AttackDamage / 2)
+                    {
+                        opponenthealth.Value = player.AttackDamage / 2;
+                    }
+                    opponenthealth.Value -= player.AttackDamage / 2;
+                    if (opponentpower.Value > 90)
+                    {
+                        opponentpower.Value = 90;
+                    }
+                    opponentpower.Value += 10;
+                    battledata.Text += $"{opponent.Name} blocked {player.Name}'s Attack and took {player.AttackDamage / 2} damage \r\n";
+                }
             }
             else
             {
-                if (opponenthealth.Value < player.AttackDamage)
+                if (opponent.Passives.Name == "HalfDamage" & opponent.PassiveActive == true)
                 {
-                    opponenthealth.Value = player.AttackDamage;
+                    if (player.Passives.Name == "DoubleDamage" & opponent.PassiveActive == true)
+                    {
+                        if (opponenthealth.Value < player.AttackDamage)
+                        {
+                            opponenthealth.Value = player.AttackDamage;
+                        }
+                        opponenthealth.Value -= player.AttackDamage;
+
+                        if (opponentpower.Value > 90)
+                        {
+                            opponentpower.Value = 90;
+                        }
+                        opponentpower.Value += 10;
+                        battledata.Text += $"{opponent.Name} blocked with half damage passive against {player.Name}'s attack and took {player.AttackDamage} damage \r\n";
+                    }
+                    else
+                    {
+                        if (opponenthealth.Value < player.AttackDamage / 2)
+                        {
+                            opponenthealth.Value = player.AttackDamage / 2;
+                        }
+                        opponenthealth.Value -= player.AttackDamage / 2;
+
+                        if (opponentpower.Value > 90)
+                        {
+                            opponentpower.Value = 90;
+                        }
+                        opponentpower.Value += 10;
+                        battledata.Text += $"{opponent.Name} blocked with half damage passive against {player.Name}'s Attack and took {player.AttackDamage / 2} damage \r\n";
+                    }
                 }
-                opponenthealth.Value -= player.AttackDamage;
-                battledata.Text += $"{player.Name} has successfully attacked {opponent.Name} dealing {player.AttackDamage} damage \r\n";
+                else if (opponent.Passives.Name == "Dodge" & opponent.PassiveActive == true)
+                {
+                    battledata.Text += $"{opponent.Name} dodged {player.Name}'s Attack \r\n";
+                }
+                else if (opponent.Passives.Name == "Absorb" & opponent.PassiveActive == true)
+                {
+                    if (opponent.Form == 2)
+                    {
+                        if (opponenthealth.Value > 100 - 10)
+                        {
+                            opponenthealth.Value = 100 - 10;
+                        }
+                        opponenthealth.Value = opponenthealth.Value + 10;
+                        HealthLabel.Text = opponenthealth.Value.ToString();
+                        battledata.Text += opponent.Name + " has absorbed " + player.Name + "'s attack and gained " + 10 + " health \r\n";
+                    }
+                    else
+                    {
+                        if (opponenthealth.Value > 100 - 5)
+                        {
+                            opponenthealth.Value = 100 - 5;
+                        }
+                        opponenthealth.Value = opponenthealth.Value + 5;
+                        HealthLabel.Text = opponenthealth.Value.ToString();
+                        battledata.Text += opponent.Name + " has absorbed " + player.Name + "'s attack and gained " + 5 + " health \r\n";
+                    }
+                }
+                else if (player.Passives.Name == "DoubleDamage" & player.PassiveActive == true)
+                {
+                    if (opponenthealth.Value < player.AttackDamage * 2)
+                    {
+                        opponenthealth.Value = player.AttackDamage * 2;
+                    }
+                    opponenthealth.Value -= player.AttackDamage * 2;
+
+                    if (opponentpower.Value > 90)
+                    {
+                        opponentpower.Value = 90;
+                    }
+                    opponentpower.Value += 10;
+                    battledata.Text += $"{opponent.Name} blocked {player.Name}'s Attack and took {player.AttackDamage * 2} damage \r\n";
+                }
+                else
+                {
+                    if (opponenthealth.Value < player.AttackDamage)
+                    {
+                        opponenthealth.Value = player.AttackDamage;
+                    }
+                    opponenthealth.Value -= player.AttackDamage;
+                    battledata.Text += $"{player.Name} has successfully attacked {opponent.Name} dealing {player.AttackDamage} damage \r\n";
+                }
             }
             playerpower.Value -= player.PowerCost;
             ophplb.Text = "Health: " + opponenthealth.Value.ToString();
             oppwlb.Text = "POWER: " + opponentpower.Value.ToString();
             playerpwlb.Text = "POWER: " + playerpower.Value.ToString();
         }
-        public void PowerupMethod(Character player, ProgressBar playerpower, Label playerpowerlabel)
+        public void PowerupMethod(Character player, ProgressBar playerpower, Label playerpowerlabel, ProgressBar opponentpower, Label opponentpowerlabel)
         {
-            if (playerpower.Value > 70)
+            if (player.Passives.Name == "TriplePowerUp")
             {
-                playerpower.Value = 70;
+                playerpower.Value = 100;
             }
-            playerpower.Value += 30;
+            else if (player.Passives.Name == "Steal")
+            {
+                if (playerpower.Value > 50)
+                {
+                    playerpower.Value = 50;
+                }
+                playerpower.Value += 50;
+
+                if (opponentpower.Value < 10)
+                {
+                    opponentpower.Value = 10;
+                }
+                opponentpower.Value -= 10;
+            }
+            else
+            {
+                if (playerpower.Value > 70)
+                {
+                    playerpower.Value = 70;
+                }
+                playerpower.Value += 30;
+            }
             playerpowerlabel.Text = "POWER: " + playerpower.Value.ToString();
             battledata.Text += player.Name + " has powered up to " + playerpower.Value + "% \r\n";
         }
-        private void button7_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            P1 = _context.Characters.Where(x => x.Name == keep1).FirstOrDefault();
-            P2 = _context.Characters.Where(x => x.Name == keep2).FirstOrDefault();
-            Arena arena = new Arena(P1, P2, Settings);
-            if (team)
-            {
-                arena.P10 = P10;
-                arena.P20 = P20;
-                arena.P30 = P30;
-                arena.P40 = P40;
-                arena.p1win = p1win;
-                arena.p2win = p2win;
-                arena.team = true;
-            }
-            arena.ShowDialog();
-            this.Close();
-        }
-        private void button8_Click(object sender, EventArgs e)
-        {
-            CharacterSelect cs = new CharacterSelect();
-            this.Hide();
-            cs.ShowDialog();
-            this.Close();
-        }
-        private void button9_Click(object sender, EventArgs e)
-        {
-            Form1 cs = new Form1();
-            this.Hide();
-            cs.ShowDialog();
-            this.Close();
-        }
         private void TransformMethod(Character CurrentPlayer, PictureBox NewPicture, ProgressBar PowerBar, Label PowerLabel)
         {
+            PowerBar.Value = PowerBar.Value - CurrentPlayer.UpgradeCost;
             if (CurrentPlayer == P1)
             {
-                P1 = _context.Characters.Where(x => x.Name == P1.Name & x.Form == P1.Form + 1).FirstOrDefault();
+                P1 = _context.Characters.Include("Passives").Where(x => x.Name == P1.Name & x.Form == P1.Form + 1).FirstOrDefault();
                 NewPicture.Image = Image.FromFile(P1.PortraitLeft);
                 CurrentPlayer = P1;
             }
             if (CurrentPlayer == P2)
             {
-                P2 = _context.Characters.Where(x => x.Name == P2.Name & x.Form == P2.Form + 1).FirstOrDefault();
+                P2 = _context.Characters.Include("Passives").Where(x => x.Name == P2.Name & x.Form == P2.Form + 1).FirstOrDefault();
                 NewPicture.Image = Image.FromFile(P2.PortraitRight);
                 CurrentPlayer = P2;
             }
-            PowerBar.Value = PowerBar.Value - CurrentPlayer.UpgradeCost;
             PowerLabel.Text = $"POWER: {PowerBar.Value.ToString()}";
             if (CurrentPlayer.Form == 2)
             {
                 battledata.Text += $"{CurrentPlayer.Name} transformed into thier second form\r\n";
             }
-            else if(CurrentPlayer.Form == 3)
+            else if (CurrentPlayer.Form == 3)
             {
                 battledata.Text += $"{CurrentPlayer.Name} transformed into thier third form\r\n";
             }
@@ -569,7 +773,23 @@ namespace DBZFinal
         }
         private Character UltimateMethod(Character player, Character enemy, ProgressBar playerpower, ProgressBar enemyhealth, ProgressBar enemypower, Label playerpowerlabel, Label enemyhealthlabel, Label enemypowerlabel, string enemystatus, PictureBox playerpb)
         {
-            if (enemystatus == "Block")
+            if (player.Name == "Vegito" | player.Name == "Whis")
+            {
+                if (enemyhealth.Value < player.UltDamage)
+                {
+                    enemyhealth.Value = player.UltDamage;
+                }
+                enemyhealth.Value -= player.UltDamage;
+                if (enemystatus == "Block")
+                {
+                    battledata.Text += player.Name + " ult was unblockable dealing " + player.UltDamage + " damage \r\n";
+                }
+                else
+                {
+                    battledata.Text += player.Name + " has successfully ulted " + enemy.Name + " dealing " + player.UltDamage + " damage \r\n";
+                }
+            }
+            else if (enemystatus == "Block")
             {
                 if (enemyhealth.Value < player.UltDamage / 2)
                 {
@@ -598,7 +818,7 @@ namespace DBZFinal
             playerpowerlabel.Text = "POWER: " + playerpower.Value.ToString();
             if (player.Name == "Sasuke" & player.Form == 2)
             {
-                player = _context.Characters.Where(x => x.Name == player.Name & x.Form == 3).FirstOrDefault();
+                player = _context.Characters.Include("Passives").Where(x => x.Name == player.Name & x.Form == 3).FirstOrDefault();
                 playerpb.Image = Image.FromFile(player.PortraitLeft);
                 return player;
             }
@@ -619,9 +839,11 @@ namespace DBZFinal
                 time = 15;
                 reset.Stop();
                 reset.Start();
+                PassiveMethod(P1, p1power, p1health, p1powerlabel, p1healthlabel);
             }
             else
             {
+                PassiveMethod(P2, p2power, p2health, p2powerlabel, p2healthlabel);
                 lockin();
             }
         }
@@ -673,6 +895,88 @@ namespace DBZFinal
             disable5.Enabled = false;
             enable1.Enabled = true;
             enable2.Enabled = true;
+        }
+        private void button7_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            P1 = _context.Characters.Include("Passives").Where(x => x.Name == keep1).FirstOrDefault();
+            P2 = _context.Characters.Include("Passives").Where(x => x.Name == keep2).FirstOrDefault();
+            Arena arena = new Arena(P1, P2, Settings);
+            if (team)
+            {
+                arena.P10 = P10;
+                arena.P20 = P20;
+                arena.P30 = P30;
+                arena.P40 = P40;
+                arena.p1win = p1win;
+                arena.p2win = p2win;
+                arena.team = true;
+            }
+            arena.ShowDialog();
+            this.Close();
+        }
+        private void button8_Click(object sender, EventArgs e)
+        {
+            CharacterSelect cs = new CharacterSelect();
+            this.Hide();
+            cs.ShowDialog();
+            this.Close();
+        }
+        private void button9_Click(object sender, EventArgs e)
+        {
+            Form1 cs = new Form1();
+            this.Hide();
+            cs.ShowDialog();
+            this.Close();
+        }
+        public void PassiveMethod(Character CurrentPlayer, ProgressBar CurrentPlayerPowerBar, ProgressBar CurrentPlayerHealthBar, Label CurrentPlayerPowerLabel, Label CurrentPlayerHealthLabel)
+        {
+            Random rnd = new Random();
+            int random = rnd.Next(1, 100);
+            if (random <= CurrentPlayer.PassiveChance)
+            {
+                CurrentPlayer.PassiveActive = true;
+            }
+            if (CurrentPlayer.Name == "Goku" & random >= 1 & random <= CurrentPlayer.PassiveChance)
+            {
+                if (CurrentPlayerPowerBar.Value > 80)
+                {
+                    CurrentPlayerPowerBar.Value = 80;
+                }
+                battledata.Text += CurrentPlayer.Name + " gained 20 energy from his passive \r\n";
+                CurrentPlayerPowerBar.Value += 20;
+                CurrentPlayerPowerLabel.Text = "POWER:" + CurrentPlayerPowerBar.Value.ToString();
+            }
+            if (CurrentPlayer.Name == "Vegeta" & random >= 1 & random <= CurrentPlayer.PassiveChance)
+            {
+                if (CurrentPlayerHealthBar.Value > 75)
+                {
+                    CurrentPlayerHealthBar.Value = 75;
+                }
+                if (CurrentPlayerHealthBar.Value <= 40)
+                {
+                    CurrentPlayer.PassiveChance = 40;
+                }
+                battledata.Text += CurrentPlayer.Name + " gained 25 health from his passive \r\n";
+                CurrentPlayerHealthBar.Value += 25;
+                CurrentPlayerHealthLabel.Text = "HEALTH:" + CurrentPlayerHealthBar.Value.ToString();
+            }
+            if (CurrentPlayer.Name == "Gohan" & CurrentPlayerHealthBar.Value < 30 & CurrentPlayer.Form == 3)
+            {
+                CurrentPlayer.AttackDamage = 45;
+                if (CurrentPlayerPowerBar.Value >= 90)
+                {
+                    CurrentPlayerPowerBar.Value = 90;
+                }
+                CurrentPlayerPowerBar.Value += 10;
+                CurrentPlayerPowerLabel.Text = CurrentPlayerPowerBar.Value.ToString();
+                battledata.Text += "Gohan gained 10 energy from his passive and entered rage \r\n";
+            }
+            if (CurrentPlayer.Name == "Jiren" & CurrentPlayerHealthBar.Value <= 35 | CurrentPlayer.Name == "Toppo" & CurrentPlayerHealthBar.Value <= 35)
+            {
+                CurrentPlayer.PassiveChance += 10;
+                CurrentPlayer.UltDamage = 80;
+            }
         }
     }
 }

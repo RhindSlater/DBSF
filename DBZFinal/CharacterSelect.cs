@@ -51,7 +51,7 @@ namespace DBZFinal
                 {
                     if (P3 != null & P1 == null)
                     {
-                        P3 = _context.Characters.Where(x => x.Name == button.Name & x.Form == P3.Form + 1).FirstOrDefault();
+                        P3 = _context.Characters.Include("Passives").Where(x => x.Name == button.Name & x.Form == P3.Form + 1).FirstOrDefault();
                         if (P3 != null)
                         {
                             pictureBox1.Image = Image.FromFile(P3.PortraitLeft);
@@ -59,7 +59,7 @@ namespace DBZFinal
                     }
                     if (P4 != null & P2 == null)
                     {
-                        P4 = _context.Characters.Where(x => x.Name == button.Name & x.Form == P4.Form + 1).FirstOrDefault();
+                        P4 = _context.Characters.Include("Passives").Where(x => x.Name == button.Name & x.Form == P4.Form + 1).FirstOrDefault();
                         if (P4 != null)
                         {
                             pictureBox2.Image = Image.FromFile(P4.PortraitRight);
@@ -354,8 +354,8 @@ namespace DBZFinal
 
             using (Context _context = new Context())
             {
-                P3 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
-                P4 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                P3 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
+                P4 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                 p1win = _context.WinPercentages.Where(x => x.Player == "P1" & x.Character == character).FirstOrDefault();
                 p2win = _context.WinPercentages.Where(x => x.Player == "P2" & x.Character == character).FirstOrDefault();
                 p10win = _context.WinPercentages.Where(x => x.Player == "P1" & x.Character == character).FirstOrDefault();
@@ -464,7 +464,7 @@ namespace DBZFinal
                     {
                         if(label7.Text == "Player 1 turn")
                         {
-                            P1 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                            P1 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                             (sender as Button).Image = Properties.Resources.p1;
                             play1 = (sender as Button).Name;
                             P1Port.Image = Image.FromFile(P1.Portrait);
@@ -502,7 +502,7 @@ namespace DBZFinal
                     {
                         if (P1.Name != (sender as Button).Name)
                         {
-                            P10 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                            P10 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                             (sender as Button).Image = Properties.Resources.p1;
                             play10 = (sender as Button).Name;
                             P10Port.Image = Image.FromFile(P10.Portrait);
@@ -521,7 +521,7 @@ namespace DBZFinal
                     {
                         if (P1.Name != (sender as Button).Name & P10.Name != (sender as Button).Name)
                         {
-                            P30 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                            P30 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                             (sender as Button).Image = Properties.Resources.p1;
                             play30 = (sender as Button).Name;
                             P30Port.Image = Image.FromFile(P30.Portrait);
@@ -541,7 +541,7 @@ namespace DBZFinal
                     {
                         if (label7.Text == "Player 2 turn")
                         {
-                            P2 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                            P2 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                             (sender as Button).Image = Properties.Resources.p2;
                             play2 = (sender as Button).Name;
                             P2Port.Image = Image.FromFile(P2.Portrait);
@@ -579,7 +579,7 @@ namespace DBZFinal
                     {
                         if (P2.Name != (sender as Button).Name)
                         {
-                            P20 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                            P20 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                             (sender as Button).Image = Properties.Resources.p2;
                             play20 = (sender as Button).Name;
                             P20Port.Image = Image.FromFile(P20.Portrait);
@@ -598,7 +598,7 @@ namespace DBZFinal
                     {
                         if (P2.Name != (sender as Button).Name & P20.Name != (sender as Button).Name)
                         {
-                            P40 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                            P40 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                             (sender as Button).Image = Properties.Resources.p2;
                             play40 = (sender as Button).Name;
                             P40Port.Image = Image.FromFile(P40.Portrait);
@@ -677,7 +677,7 @@ namespace DBZFinal
                 {
                     if (P3 != null & P1 == null)
                     {
-                        P3 = _context.Characters.Where(x => x.Name == character & x.Form == P3.Form + 1).FirstOrDefault();
+                        P3 = _context.Characters.Include("Passives").Where(x => x.Name == character & x.Form == P3.Form + 1).FirstOrDefault();
                         if (P3 != null)
                         {
                             pictureBox1.Image = Image.FromFile(P3.PortraitLeft);
@@ -685,7 +685,7 @@ namespace DBZFinal
                     }
                     else if (P1 != null & P3 != null)
                     {
-                        P3 = _context.Characters.Where(x => x.Name == P1.Name & x.Form == P3.Form + 1).FirstOrDefault();
+                        P3 = _context.Characters.Include("Passives").Where(x => x.Name == P1.Name & x.Form == P3.Form + 1).FirstOrDefault();
                         if (P3 != null)
                         {
                             pictureBox1.Image = Image.FromFile(P3.PortraitLeft);
@@ -697,7 +697,7 @@ namespace DBZFinal
                 {
                     if (P4 != null)
                     {
-                        P4 = _context.Characters.Where(x => x.Name == character & x.Form == P4.Form + 1).FirstOrDefault();
+                        P4 = _context.Characters.Include("Passives").Where(x => x.Name == character & x.Form == P4.Form + 1).FirstOrDefault();
                         if (P4 != null)
                         {
                             pictureBox2.Image = Image.FromFile(P4.PortraitRight);
@@ -705,7 +705,7 @@ namespace DBZFinal
                     }
                     else if (P2 != null & P4 != null)
                     {
-                        P4 = _context.Characters.Where(x => x.Name == P2.Name & x.Form == P4.Form + 1).FirstOrDefault();
+                        P4 = _context.Characters.Include("Passives").Where(x => x.Name == P2.Name & x.Form == P4.Form + 1).FirstOrDefault();
                         if (P4 != null)
                         {
                             pictureBox2.Image = Image.FromFile(P4.PortraitLeft);
@@ -721,7 +721,7 @@ namespace DBZFinal
                         if(b.Name != "Zeno")
                         {
                             character = b.Name;
-                            P1 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                            P1 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                             b.Select();
                             b.Image = Properties.Resources.p1;
                             play1 = b.Name;
@@ -735,7 +735,7 @@ namespace DBZFinal
                         if(P1.Name != b.Name & b.Name != "Zeno")
                         {
                             character = b.Name;
-                            P10 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                            P10 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                             b.Select();
                             b.Image = Properties.Resources.p1;
                             play10 = b.Name;
@@ -749,7 +749,7 @@ namespace DBZFinal
                         if (P1.Name != b.Name & P10.Name != b.Name & b.Name != "Zeno")
                         {
                             character = b.Name;
-                            P30 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                            P30 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                             b.Select();
                             b.Image = Properties.Resources.p1;
                             play30 = b.Name;
@@ -766,7 +766,7 @@ namespace DBZFinal
                         if (b.Name != "Zeno")
                         {
                             character = b.Name;
-                            P2 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                            P2 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                             b.Select();
                             b.Image = Properties.Resources.p2;
                             play2 = b.Name;
@@ -780,7 +780,7 @@ namespace DBZFinal
                         if (P2.Name != b.Name & b.Name != "Zeno")
                         {
                             character = b.Name;
-                            P20 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                            P20 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                             b.Select();
                             b.Image = Properties.Resources.p2;
                             play20 = b.Name;
@@ -794,7 +794,7 @@ namespace DBZFinal
                         if (P2.Name != b.Name & P20.Name != b.Name & b.Name != "Zeno")
                         {
                             character = b.Name;
-                            P40 = _context.Characters.Where(x => x.Name == character).FirstOrDefault();
+                            P40 = _context.Characters.Include("Passives").Where(x => x.Name == character).FirstOrDefault();
                             b.Select();
                             b.Image = Properties.Resources.p2;
                             play40 = b.Name;

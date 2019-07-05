@@ -12,5 +12,6 @@ namespace DBZFinal
         public DbSet<Character> Characters { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<WinPercentage> WinPercentages { get; set; }
+        public DbSet<Passive> Passives { get; set; }
     }
 }

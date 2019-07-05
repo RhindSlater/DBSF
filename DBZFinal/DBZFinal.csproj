@@ -84,7 +84,16 @@
     <Compile Include="Migrations\201811171405427_addingWinPercentage.Designer.cs">
       <DependentUpon>201811171405427_addingWinPercentage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907040640126_PassivesClass.cs" />
+    <Compile Include="Migrations\201907040640126_PassivesClass.Designer.cs">
+      <DependentUpon>201907040640126_PassivesClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907041051067_test.cs" />
+    <Compile Include="Migrations\201907041051067_test.Designer.cs">
+      <DependentUpon>201907041051067_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Passive.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setting.cs" />
@@ -103,6 +112,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811171405427_addingWinPercentage.resx">
       <DependentUpon>201811171405427_addingWinPercentage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907040640126_PassivesClass.resx">
+      <DependentUpon>201907040640126_PassivesClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907041051067_test.resx">
+      <DependentUpon>201907041051067_test.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

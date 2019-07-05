@@ -21,14 +21,8 @@ namespace DBZFinal
         public bool CanUlt { get; set; }
         public int UltCost { get; set; }
         public int PassiveChance { get; set; }
-        public bool PassiveDodge { get; set; }
-        public bool PassiveDoubleDamage { get; set; }
-        public bool PassiveHalfDamage { get; set; }
-        public bool PassiveTriplePowerup { get; set; }
-        public bool PassiveSteal { get; set; }
-        public bool PassiveAbsorb { get; set; }
-        public bool PassiveUnblockable { get; set; }
-        public bool PassiveSkip { get; set; }
+        public Passive Passives { get; set; }
+        public bool PassiveActive { get; set; }
         public string Portrait { get; set; }
         public string PortraitLeft { get; set; }
         public string PortraitRight { get; set; }
